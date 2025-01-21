@@ -1,0 +1,108 @@
+# https://toml.io/en/v1.0.0
+# https://peps.python.org/pep-0621/
+# https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html
+# https://validate-pyproject.readthedocs.io/en/latest/schemas.html
+
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [
+  "setuptools",
+  "setuptools_scm[toml]"
+]
+
+[project]
+authors = [
+  {name = "Lance Finn Helsten", email = "lanhel@flyingtitans.com"}
+]
+classifiers = [
+  "Development Status :: 1 - Planning",
+  "Environment :: Console",
+  "Intended Audience :: Information Technology",
+  "License :: OSI Approved",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python"
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: System :: Logging"
+]
+dependencies = [
+  "setuptools_scm[toml]",
+  "pyaml"
+]
+description = "Python logging configuration using YAML"
+dynamic = [
+  "version"
+]
+keywords = [
+  "logging", "yaml"
+]
+license = "Apache License, Version 2.0"
+license-files = ["LICENSE"]
+maintainers = [
+  {name = "Lance Finn Helsten", email = "lanhel@flyingtitans.com"}
+]
+name = "logging_config_yaml"
+readme = "README.rst"
+requires-python = ">=3.10"
+
+[project.optional-dependencies]
+dev = [
+  "pre-commit",
+  "setup-cfg-fmt"
+]
+docs = [
+  "docutils",
+  "Sphinx",
+  "sphinx-sitemap",
+  "pydata_sphinx_theme",
+  "sphinxcontrib-plantuml",
+  "towncrier",
+  "gitpython"
+]
+lint = [
+  "black",
+  "isort",
+  "pylint",
+  "pydocstyle"
+]
+test = [
+  "pytest",
+  "pytest-order",
+  "pytest-cov",
+  "coverage[toml]"
+]
+
+[tool.setuptools_scm]
+version_scheme = "python-simplified-semver"
+
+[tool.pytest.ini_options]
+testpaths = "tests"
+markers = [
+  "smoke: Marks tests as part of the smoke test phase",
+  "predeploy: Marks tests as part of the predeploy test phase",
+  "postdeploy: Marks tests as part of the postdeploy test phase",
+  "integration: Marks tests as part of the integration test suite",
+  "functional: Marks tests as part of the functional test suite",
+  "acceptance: Marks tests as part of the acceptance test suite"
+]
+
+[tool.pylint.'MESSAGES CONTROL']
+disable = """
+    missing-module-docstring,
+    missing-class-docstring,
+    missing-function-docstring,
+    redefined-outer-name
+"""
+
+[tool.black]
+line-length = 88
+target-version = ['py313']
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+line_length = 88

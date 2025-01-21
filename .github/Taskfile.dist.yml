@@ -1,0 +1,38 @@
+version: '3'
+
+
+tasks:
+
+  act:ci:
+    desc: Run the GitHub Action CI workflow locally
+    summary: |
+      1. nektosact/act (https://nektosact.com/) is required
+      2. If a "Cannot connect to the Docker daemon at unix" error occurs
+         check out solution at https://github.com/nektos/act/issues/1658
+
+         a. macOS `sudo ln -s ~/.docker/run/docker.sock /var/run/docker.sock`
+    cmds:
+      - cmd: >
+          act push
+          --secret GITHUB_TOKEN="$(gh auth token)"
+          --container-architecture linux/arm64
+          --platform ubuntu-22.04=nektos/act-environments-ubuntu:22.04
+          --action-offline-mode
+          {{.CLI_ARGS}}
+
+  act:clean:
+    desc: Clean the GitHub Action docker instances
+    cmds:
+      - cmd: >
+          docker ps --all
+          | awk '/catthehacker/ {print $1}'
+          | xargs --no-run-if-empty docker kill --signal=SIGHUP 2> /dev/null
+        ignore_error: true
+      - cmd: >
+          docker ps --all
+          | awk '/catthehacker/ {print $1}'
+          | xargs --no-run-if-empty docker container rm --force
+      - cmd: >
+          docker images --all
+          | awk '/catthehacker/ {print $3}'
+          | xargs --no-run-if-empty docker image rm

@@ -1,0 +1,83 @@
+version: '3'
+
+vars:
+  python_version: "3.12"
+
+dotenv: [.env, '{{.ENV}}/.env', '{{.HOME}}/.env']
+
+includes:
+  docs:
+    taskfile: docs/Taskfile.dist.yml
+    dir: docs
+  tests:
+    taskfile: tests/Taskfile.dist.yml
+    dir: tests
+  github:
+    taskfile: .github/Taskfile.dist.yml
+
+tasks:
+
+  build:
+    desc: Build the library
+    deps:
+      - setup:python:dev
+    cmds:
+      - TBD
+
+  clean:
+    desc: Clean generated files
+    deps:
+      - tests:clean
+    cmds:
+      - rm -rf ./build
+      - rm -rf ./dist
+      - rm -rf ./src/*.egg-info
+      - cmd: find ./src -type d -name __pycache__ -exec rm -rf {} \; 2> /dev/null
+        ignore_error: true
+
+  setup:dev:
+    desc: Setup development environment
+    preconditions:
+      - sh: test -d ${VIRTUAL_ENV:-.venv}
+        msg: A virtual environment is required (e.g. `python -m venv .venv && source .venv/bin/activate`)
+    sources:
+      - pyproject.toml
+    cmds:
+      - task: setup:git
+      - task: setup:python:dev
+
+  setup:git:
+    desc: Setup git hooks
+    run: once
+    status:
+      - grep --quiet 'exec pre-commit' .git/hooks/pre-commit
+    cmds:
+      - pre-commit install
+
+  setup:python:runtime:
+    desc: Setup python runtime environment
+    run: once
+    preconditions:
+      - sh: '[[ "$(python --version)" = "Python {{.python_version}}."* ]]'
+        msg: Python version {{.python_version}} required
+    sources:
+      - pyproject.toml
+    cmds:
+      - python -m pip --quiet install --upgrade pip
+      - python -m pip --quiet install --upgrade .
+
+  setup:python:dev:
+    desc: Setup python development environment
+    run: once
+    preconditions:
+      - sh: which poetry > /dev/null
+        msg: Poetry must be installed (see https://python-poetry.org/docs/#installation)
+    sources:
+      - pyproject.toml
+    deps:
+      - setup:python:runtime
+    cmds:
+      - python -m pip --quiet install --upgrade ".[dev]"
+      - python -m pip --quiet install --upgrade ".[lint]"
+      - python -m pip --quiet install --upgrade ".[test]"
+
