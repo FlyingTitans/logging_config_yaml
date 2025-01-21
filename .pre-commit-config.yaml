@@ -14,14 +14,19 @@ repos:
       - id: check-shebang-scripts-are-executable
       - id: end-of-file-fixer
       - id: trailing-whitespace
-      - id: pretty_format_json
+      # - id: pretty_format_json
   - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
-    rev: v2.12.0
+    rev: v2.14.0
     hooks:
       - id: pretty-format-yaml
         args: [--autofix, --indent, '2', --offset, '2']
       - id: pretty-format-toml
         args: [--autofix, --indent, '2']
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        name: isort (python)
   - repo: https://github.com/psf/black
     rev: 24.10.0
     hooks:
@@ -34,32 +39,17 @@ repos:
         language: system
         types: [python]
         args: [-rn, -sn]
-  - repo: https://github.com/dnephin/pre-commit-golang
-    rev: v0.5.1
-    hooks:
-      - id: go-fmt
-  # - id: go-vet
-  # - id: golangci-lint
-  # - id: go-imports
-  # - id: go-cyclo
-  #   args: [-over=15]
-  # - id: validate-toml
-  # - id: no-go-testing
-  # - id: go-critic
-  # - id: go-unit-tests
-  # - id: go-build
-  # - id: go-mod-tidy
 
 
 # https://pre-commit.ci
 ci:
-    autofix_commit_msg: |
-        [pre-commit.ci] auto fixes from pre-commit.com hooks
+  autofix_commit_msg: |
+    [pre-commit.ci] auto fixes from pre-commit.com hooks
 
-        for more information, see https://pre-commit.ci
-    autofix_prs: true
-    autoupdate_branch: ''
-    autoupdate_commit_msg: '[pre-commit.ci] pre-commit autoupdate'
-    autoupdate_schedule: weekly
-    skip: []
-    submodules: false
+    for more information, see https://pre-commit.ci
+  autofix_prs: true
+  autoupdate_branch: ''
+  autoupdate_commit_msg: '[pre-commit.ci] pre-commit autoupdate'
+  autoupdate_schedule: weekly
+  skip: []
+  submodules: false

@@ -4,9 +4,9 @@ name: CI
 
 on:
   push:
-    branches: [ main, stage, develop ]
+    branches: [main, stage, develop]
   pull_request:
-    branches: [ main, stage, develop ]
+    branches: [main, stage, develop]
 
 # Sets the permissions granted to the `GITHUB_TOKEN` for the actions
 # in this job.
@@ -31,7 +31,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-          cache: 'pip'
+          cache: pip
 
       - name: Load cached venv
         id: cached-venv
@@ -47,7 +47,7 @@ jobs:
       - name: Run linting
         run: |
           black src tests
-          pylint 
+          pylint
 
   test:
     runs-on: ubuntu-latest
@@ -67,7 +67,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-          cache: 'pip'
+          cache: pip
 
       - name: Load cached venv
         id: cached-venv

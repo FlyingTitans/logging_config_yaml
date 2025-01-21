@@ -118,4 +118,4 @@ tasks:
         silent: true
       - task: default
         vars:
-            marks: -m "{{.marks}}"
+          marks: -m "{{.marks}}"

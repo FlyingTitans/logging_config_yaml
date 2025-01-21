@@ -11,15 +11,15 @@ Prerequisites
 
 1. Required packages:
 
-   1. [Python](https://www.python.com) version 3.11
-   2. [Pip](https://pip.pypa.io/en/stable/) minimum version 24.0
-   3. [Task (aka Taskfile)](https://taskfile.dev) version 3.35
-   4. [pre-commit](https://pre-commit.com) minimum version 4.0
+   1. `Python <https://www.python.com>`_ version 3.10
+   2. `Pip <https://pip.pypa.io/en/stable/>`_ minimum version 24.0
+   3. `Task (aka Taskfile) <https://taskfile.dev>`_ version 3.35
+   4. `pre-commit <https://pre-commit.com>`_ minimum version 4.0
 
 2. Recommended packages:
 
-   1. [direnv](https://direnv.net)
-   2. [virtualenv](https://virtualenv.pypa.io/en/latest/) minimum version 20.0
+   1. `direnv <https://direnv.net>`_
+   2. `virtualenv <https://virtualenv.pypa.io/en/latest/>`_
 
 
 =================

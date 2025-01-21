@@ -1,7 +1,7 @@
 version: '3'
 
 vars:
-  python_version: "3.12"
+  python_version: '3.10'
 
 dotenv: [.env, '{{.ENV}}/.env', '{{.HOME}}/.env']
 
@@ -63,21 +63,17 @@ tasks:
     sources:
       - pyproject.toml
     cmds:
-      - python -m pip --quiet install --upgrade pip
-      - python -m pip --quiet install --upgrade .
+      - python -m pip install --upgrade pip
+      - python -m pip install --upgrade .
 
   setup:python:dev:
     desc: Setup python development environment
     run: once
-    preconditions:
-      - sh: which poetry > /dev/null
-        msg: Poetry must be installed (see https://python-poetry.org/docs/#installation)
     sources:
       - pyproject.toml
     deps:
       - setup:python:runtime
     cmds:
-      - python -m pip --quiet install --upgrade ".[dev]"
-      - python -m pip --quiet install --upgrade ".[lint]"
-      - python -m pip --quiet install --upgrade ".[test]"
-
+      - python -m pip install --upgrade ".[dev]"
+      - python -m pip install --upgrade ".[lint]"
+      - python -m pip install --upgrade ".[test]"

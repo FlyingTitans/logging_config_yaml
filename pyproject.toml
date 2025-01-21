@@ -18,10 +18,10 @@ classifiers = [
   "Development Status :: 1 - Planning",
   "Environment :: Console",
   "Intended Audience :: Information Technology",
-  "License :: OSI Approved",
+  "License :: OSI Approved :: Apache Software License",
   "Natural Language :: English",
   "Operating System :: OS Independent",
-  "Programming Language :: Python"
+  "Programming Language :: Python",
   "Topic :: Software Development :: Libraries :: Python Modules",
   "Topic :: System :: Logging"
 ]
@@ -34,10 +34,10 @@ dynamic = [
   "version"
 ]
 keywords = [
-  "logging", "yaml"
+  "logging",
+  "yaml"
 ]
-license = "Apache License, Version 2.0"
-license-files = ["LICENSE"]
+license = {file = "LICENSE"}
 maintainers = [
   {name = "Lance Finn Helsten", email = "lanhel@flyingtitans.com"}
 ]
@@ -72,11 +72,29 @@ test = [
   "coverage[toml]"
 ]
 
-[tool.setuptools_scm]
-version_scheme = "python-simplified-semver"
+[tool.black]
+include = '\.pyi?$'
+line-length = 88
+target-version = ['py313']
+
+[tool.coverage.run]
+branch = true
+omit = [
+  "src/carbon-backend/app/tests/**/*.py",
+  "src/carbon-celery/app/tests/**/*.py",
+  "tests/**/*.py"
+]
+
+[tool.isort]
+force_grid_wrap = 0
+include_trailing_comma = true
+line_length = 88
+multi_line_output = 3
+profile = "black"
+use_parentheses = true
 
 [tool.pytest.ini_options]
-testpaths = "tests"
+addopts = "--strict-markers"
 markers = [
   "smoke: Marks tests as part of the smoke test phase",
   "predeploy: Marks tests as part of the predeploy test phase",
@@ -85,24 +103,7 @@ markers = [
   "functional: Marks tests as part of the functional test suite",
   "acceptance: Marks tests as part of the acceptance test suite"
 ]
+testpaths = "tests"
 
-[tool.pylint.'MESSAGES CONTROL']
-disable = """
-    missing-module-docstring,
-    missing-class-docstring,
-    missing-function-docstring,
-    redefined-outer-name
-"""
-
-[tool.black]
-line-length = 88
-target-version = ['py313']
-include = '\.pyi?$'
-
-[tool.isort]
-profile = "black"
-multi_line_output = 3
-include_trailing_comma = true
-force_grid_wrap = 0
-use_parentheses = true
-line_length = 88
+[tool.setuptools_scm]
+version_scheme = "python-simplified-semver"
